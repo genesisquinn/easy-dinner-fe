@@ -7,6 +7,8 @@ import './App.css';
 import Recipes from './pages/Recipes';
 import Submit from './pages/newRecipe';
 import BasicExample from './pages/test';
+import Navigation from './components/navigationBar';
+import RecipeDetails from './pages/recipeDetails';
 
 
 
@@ -17,10 +19,12 @@ import BasicExample from './pages/test';
 function App() {
   return (
       <Router>
+        <Navigation />
         <Routes>
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/submit-recipe" element={<Submit />} />
           <Route path ="/test" element ={<BasicExample />} />
+          <Route path="/recipes/:_id" element={<RecipeDetails />} />
         </Routes>
       </Router>
   );

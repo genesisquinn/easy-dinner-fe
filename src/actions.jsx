@@ -56,6 +56,18 @@ const groceryListSlice = createSlice({
     },
 });
 
+const recipeDetailsSlice = createSlice({
+    name: 'recipeDetails',
+    initialState: null,
+    reducers: {
+        updateRecipeDetails: (state, action) => {
+            return action.payload;
+        },
+    },
+});
+
+export const { updateRecipeDetails } = recipeDetailsSlice.actions;
+
 export const {
     likeRecipe,
     // ... other recipe-related actions
@@ -72,6 +84,7 @@ export const {
 const rootReducer = combineReducers({
     recipes: recipesSlice.reducer,
     groceryList: groceryListSlice.reducer,
+    recipeDetails: recipeDetailsSlice.reducer,
 });
 
 

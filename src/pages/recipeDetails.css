@@ -1,0 +1,46 @@
+.container {
+    margin-top: 20px;
+}
+
+.img-container {
+    text-align: center;
+}
+
+img {
+    max-height: 400px;
+}
+
+.recipe-name {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.category {
+    font-size: 18px;
+    color: #888;
+}
+
+.instructions {
+    white-space: pre-line;
+    margin-top: 30px;
+}
+
+.ingredients {
+    margin-top: 30px;
+}
+
+.list-group-item {
+    border: none;
+    font-size: 18px;
+    padding: 0;
+    margin-bottom: 8px;
+}
+
+.list-group-item:last-child {
+    margin-bottom: 0;
+}
+
+.grocery-list {
+    margin-left: 20px;
+}

@@ -30,6 +30,7 @@ const RecipeForm = () => {
     
             const formData = new FormData();
             formData.append('name', event.target.name.value);
+            formData.append('source', event.target.source.value);
             formData.append('instructions', event.target.instructions.value);
             ingredients.forEach((ingredient) => {
                 formData.append('ingredients', ingredient);
@@ -124,6 +125,11 @@ const RecipeForm = () => {
                                     <option value='Caribbean'>Caribbean</option>
                                     <option value='Salads'>Salads</option>
                                 </select>
+                            </div>
+
+                            <div className='col-12'>
+                                <label htmlFor='source' className='form-label'>Source</label>
+                                <input type='text' name='source' id='source' className='form-control' required />
                             </div>
 
                             <div className='col-12'>

@@ -4,13 +4,15 @@ import { likeRecipe } from '../actions';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
+import './recipeCard.css';
 
 const RecipeCard = ({ recipe }) => {
     const dispatch = useDispatch();
     const [liked, setLiked] = useState(false);
 
     const handleLikeClick = () => {
-        dispatch(likeRecipe(recipe.id));
+        dispatch(likeRecipe(recipe._id));
         setLiked(true);
     };
 
@@ -24,6 +26,9 @@ const RecipeCard = ({ recipe }) => {
                 <Button variant="primary" onClick={handleLikeClick}>
                     {liked ? '❤️ Liked' : '♡ Like'}
                 </Button>
+                <Link to={`/recipes/${recipe._id}`} className="btn btn-secondary">
+                        View Details
+                    </Link>
             </div>
         </Card.Body>
     </Card>
@@ -32,7 +37,7 @@ const RecipeCard = ({ recipe }) => {
 
 RecipeCard.propTypes = {
     recipe: PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        _id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,

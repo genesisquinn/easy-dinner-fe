@@ -17,7 +17,7 @@ const persistConfig = {
     key: 'root',
     storage,
 
-    whitelist: ['likedRecipes', 'groceryList']
+    whitelist: ['likedRecipes', 'groceryList', 'recipes']
 };
 
 
