@@ -10,7 +10,7 @@ const BASE_URL = 'http://localhost:3000';
 
 const RecipesPage = () => {
     const [recipes, setRecipes] = useState([]);
-    console.log(recipes);
+    // console.log(recipes);
 
     useEffect(() => {
         axios.get(`${BASE_URL}/recipes`)
@@ -53,7 +53,7 @@ const RecipesPage = () => {
                 <Button variant="outline-success">Search</Button>
             </Form>
             <div className="recipe-cards">
-                console.log{filteredRecipes.map(recipe => (
+                {filteredRecipes.map(recipe => (
                     <RecipeCard 
                         key={recipe._id} 
                         recipe={recipe}/>

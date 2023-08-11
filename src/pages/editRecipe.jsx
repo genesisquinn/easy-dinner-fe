@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { updateRecipeDetails } from '../actions';
 import './editRecipe.css';
 
 
 const BASE_URL = 'http://localhost:3000';
 
 const RecipeEditForm = ({ recipeId , toggleEditMode }) => {
+    const dispatch = useDispatch(); 
     const [recipe, setRecipe] = useState(null);
     const [ingredients, setIngredients] = useState(['']);
     const [infoSubmitObj, setInfoSubmitObj] = useState('');
@@ -49,6 +52,8 @@ const RecipeEditForm = ({ recipeId , toggleEditMode }) => {
                     'Content-Type': 'application/json',
                 },
             });
+
+            dispatch(updateRecipeDetails(updatedRecipe));
     
             setInfoSubmitObj('Recipe updated successfully!');
             setInfoErrorsObj('');

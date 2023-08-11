@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 
 const BASE_URL = 'http://localhost:3000';
 
+
 export const likeRecipeAsync = (recipeId) => async (dispatch) => {
     try {
         const response = await axios.post(`${BASE_URL}/recipes/${recipeId}/like`);
@@ -12,6 +13,7 @@ export const likeRecipeAsync = (recipeId) => async (dispatch) => {
         console.error('Error liking recipe:', error);
     }
 };
+
 
 const recipesSlice = createSlice({
     name: 'recipes',
@@ -24,9 +26,10 @@ const recipesSlice = createSlice({
                 recipe.liked = true;
             }
         },
-        // ... other recipe-related reducers
+        
     },
 });
+
 
 const groceryListSlice = createSlice({
     name: 'groceryList',
@@ -52,9 +55,10 @@ const groceryListSlice = createSlice({
                 item.crossed = false;
             }
         },
-        // ... other grocery list-related reducers
+
     },
 });
+
 
 const recipeDetailsSlice = createSlice({
     name: 'recipeDetails',
@@ -66,26 +70,41 @@ const recipeDetailsSlice = createSlice({
     },
 });
 
-export const { updateRecipeDetails } = recipeDetailsSlice.actions;
 
+export const { updateRecipeDetails } = recipeDetailsSlice.actions;
 export const {
     likeRecipe,
-    // ... other recipe-related actions
-} = recipesSlice.actions;
 
+} = recipesSlice.actions;
 export const {
     addItemToGroceryList,
     removeItemFromGroceryList,
     crossOutGroceryListItem,
     uncrossGroceryListItem,
-    // ... other grocery list-related actions
+
 } = groceryListSlice.actions;
+
+
+export const fetchRecipes = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/recipes`);
+        dispatch(setRecipes(response.data));
+    } catch (error) {
+        console.error('Error fetching recipes:', error);
+    }
+};
+
+
+const setRecipes = (recipes) => ({
+    type: 'recipes/setRecipes', 
+    payload: recipes,
+});
+
 
 const rootReducer = combineReducers({
     recipes: recipesSlice.reducer,
     groceryList: groceryListSlice.reducer,
     recipeDetails: recipeDetailsSlice.reducer,
 });
-
 
 export default rootReducer;

@@ -13,7 +13,7 @@ const RecipeDetails = () => {
 
     
     const [editMode, setEditMode] = useState(false); 
-    const recipe = useSelector(state => state.recipes.find(recipe => recipe.id === _id));
+    const recipe = useSelector(state => state.recipeDetails);
     console.log(recipe)
 
     useEffect(() => {
