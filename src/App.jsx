@@ -6,10 +6,12 @@ import './App.css';
 
 import Recipes from './pages/Recipes';
 import Submit from './pages/newRecipe';
-import BasicExample from './pages/test';
 import Navigation from './components/navigationBar';
-import RecipeDetails from './pages/recipeDetails';
-
+import RecipeDetails from './components/recipeDetails';
+import List from './pages/List';
+import Home from './pages/Home';
+import Register from './components/registerUser';
+import Login from './components/logIn';
 
 
 
@@ -18,15 +20,18 @@ import RecipeDetails from './pages/recipeDetails';
 
 function App() {
   return (
-      <Router>
-        <Navigation />
-        <Routes>
-          <Route path="/recipes" element={<Recipes />} />
-          <Route path="/submit-recipe" element={<Submit />} />
-          <Route path ="/test" element ={<BasicExample />} />
-          <Route path="/recipes/:_id" element={<RecipeDetails />} />
-        </Routes>
-      </Router>
+    <Router>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/submit-recipe" element={<Submit />} />
+        <Route path="/recipes/:_id" element={<RecipeDetails />} />
+        <Route path="/list" element={<List />} />
+      </Routes>
+    </Router>
   );
 }
 

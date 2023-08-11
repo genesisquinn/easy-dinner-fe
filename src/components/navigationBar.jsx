@@ -2,8 +2,12 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 const Navigation = () => {
+    const username = useSelector(state => state.user.username);
+
     return ( 
         <div>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -12,7 +16,7 @@ const Navigation = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Navbar.Text>
-                            Signed in as: <a href="#login">Genesis</a>
+                            Signed in as: <a href="#login">{username}</a>
                         </Navbar.Text>
                         <Nav className="mx-auto">
                             <Nav.Link as={Link} to="/">Home</Nav.Link> 

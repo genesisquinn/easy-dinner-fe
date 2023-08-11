@@ -26,7 +26,7 @@ const recipesSlice = createSlice({
                 recipe.liked = true;
             }
         },
-        
+
     },
 });
 
@@ -69,13 +69,27 @@ const recipeDetailsSlice = createSlice({
         },
     },
 });
+const userSlice = createSlice({
+    name: 'user',
+    initialState: {
+        username: '',
+    },
+    reducers: {
+        setUser: (state, action) => {
+            state.username = action.payload;
+        },
+        clearUser: (state) => {
+            state.username = '';
+        },
+    },
+});
+
+export const { setUser, clearUser } = userSlice.actions;
 
 
 export const { updateRecipeDetails } = recipeDetailsSlice.actions;
-export const {
-    likeRecipe,
+export const { likeRecipe } = recipesSlice.actions;
 
-} = recipesSlice.actions;
 export const {
     addItemToGroceryList,
     removeItemFromGroceryList,
@@ -96,15 +110,18 @@ export const fetchRecipes = () => async (dispatch) => {
 
 
 const setRecipes = (recipes) => ({
-    type: 'recipes/setRecipes', 
+    type: 'recipes/setRecipes',
     payload: recipes,
 });
+
+
 
 
 const rootReducer = combineReducers({
     recipes: recipesSlice.reducer,
     groceryList: groceryListSlice.reducer,
     recipeDetails: recipeDetailsSlice.reducer,
+    user: userSlice.reducer,
 });
 
 export default rootReducer;

@@ -9,12 +9,13 @@ import './recipeCard.css';
 
 const RecipeCard = ({ recipe }) => {
     const dispatch = useDispatch();
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(recipe.liked || false); 
 
     const handleLikeClick = () => {
-        dispatch(likeRecipe(recipe._id));
-        setLiked(true);
+        dispatch(likeRecipe(recipe._id)); 
+        setLiked(!liked); 
     };
+
 
     return (
         <Card style={{ width: '18rem' }}>
@@ -41,6 +42,7 @@ RecipeCard.propTypes = {
         name: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
+        liked: PropTypes.bool.isRequired, 
     }).isRequired,
 };
 
