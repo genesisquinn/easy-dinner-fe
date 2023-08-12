@@ -12,7 +12,7 @@ const RecipeForm = () => {
     const [imageFile, setImageFile] = useState(null);
 
     const handleImageChange = (event) => {
-        setImageFile(event.target.files[0]) 
+        setImageFile(event.target.files[0])
     }
 
     const handleAddIngredient = () => {
@@ -26,36 +26,37 @@ const RecipeForm = () => {
     };
 
     const handleFormSubmit = async (event) => {
-            event.preventDefault();
-    
-            const formData = new FormData();
-            formData.append('name', event.target.name.value);
-            formData.append('source', event.target.source.value);
-            formData.append('instructions', event.target.instructions.value);
-            ingredients.forEach((ingredient) => {
-                formData.append('ingredients', ingredient);
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append('name', event.target.name.value);
+        formData.append('source', event.target.source.value);
+        formData.append('instructions', event.target.instructions.value);
+        ingredients.forEach((ingredient) => {
+            formData.append('ingredients', ingredient);
+        });
+        formData.append('category', event.target.category.value);
+        formData.append('image', imageFile);
+
+        try {
+            console.log(formData);
+            await axios.post(`${BASE_URL}/recipes`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                withCredentials: true, 
             });
-            formData.append('category', event.target.category.value);
-            formData.append('image', imageFile);
-    
-            try {
-                console.log(formData);
-                await axios.post(`${BASE_URL}/recipes`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                });
-    
-                setInfoSubmitObj('Recipe submitted successfully!');
-                setInfoErrorsObj('');
-            } catch (error) {
-                setInfoSubmitObj('');
-                setInfoErrorsObj([{ message: 'Oops! Something went wrong.' }]);
-            }
+
+            setInfoSubmitObj('Recipe submitted successfully!');
+            setInfoErrorsObj('');
+        } catch (error) {
+            setInfoSubmitObj('');
+            setInfoErrorsObj([{ message: 'Oops! Something went wrong.' }]);
+        }
     }
 
 
-        return (
+    return (
         <>
             <div className='px-4 py-5 my-5 text-center'>
                 <h1 className='display-5 fw-bold'>Submit Your Recipe</h1>
@@ -134,8 +135,8 @@ const RecipeForm = () => {
 
                             <div className='col-12'>
                                 <label htmlFor='image'>Product Image</label>
-                                <input type="file" className="form-control" name="image" accept="image/*"  onChange={handleImageChange} />
-                                <ImagePreview image={imageFile}/>
+                                <input type="file" className="form-control" name="image" accept="image/*" onChange={handleImageChange} />
+                                <ImagePreview image={imageFile} />
                             </div>
 
                             <div className='col-12'>

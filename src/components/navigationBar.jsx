@@ -1,8 +1,10 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import SignOutButton from './signout';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 
 
 const Navigation = () => {
@@ -24,7 +26,7 @@ const Navigation = () => {
                             <Nav.Link as={Link} to="/meals">Meals</Nav.Link>
                             <Nav.Link as={Link} to="/list">List</Nav.Link>
                             <Nav.Link as={Link} to="/submit-recipe">Submit Recipe</Nav.Link>
-                            <Nav.Link href="#bye">Sign Out</Nav.Link> 
+                            <Nav.Link><SignOutButton /></Nav.Link> 
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

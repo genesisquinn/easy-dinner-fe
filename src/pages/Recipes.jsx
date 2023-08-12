@@ -13,7 +13,7 @@ const RecipesPage = () => {
     // console.log(recipes);
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/recipes`)
+        axios.get(`${BASE_URL}/recipes`, {withCredentials: true})
             .then(response => {
                 setRecipes(response.data.recipes);
             })
