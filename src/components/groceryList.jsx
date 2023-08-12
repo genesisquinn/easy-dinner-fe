@@ -1,3 +1,5 @@
+
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -8,48 +10,23 @@ const GroceryList = () => {
     const [customItem, setCustomItem] = useState('');
     const [user, setUser] = useState('');
 
-    // const fetchGroceryList = async () => {
-    //     try {
-    //         const response = await axios.get(`${BASE_URL}/groceries`, { withCredentials: true });
-    
-    //         // Check if the response data is available
-    //         if (response.data) {
-    //             // Set the user_id in the state if available
-    //             if (response.data.user && response.data.user._id) {
-    //                 setUser(response.data.user._id);
-    //             }
-    
-    //             if (response.data.likedRecipeIngredients && response.data.likedRecipeIngredients.length > 0) {
-    //                 setGroceryList(response.data.likedRecipeIngredients);
-    //             } else {
-    //                 setGroceryList([]); // Set an empty array
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching grocery list:', error);
-    //     }
-    // };
-
     const fetchGroceryList = async () => {
         try {
             const response = await axios.get(`${BASE_URL}/groceries`, { withCredentials: true });
-    
+
             if (response.data) {
                 setUser(response.data.user._id);
-    
-                if (response.data.customItems && response.data.customItems.length > 0) {
-                    setGroceryList(response.data.customItems);
-                } else {
-                    setGroceryList([]);
-                }
+
+                // Combine liked ingredients and custom items
+                const combinedList = [...response.data.likedRecipeIngredients, ...response.data.customItems];
+                setGroceryList(combinedList);
+            } else {
+                setGroceryList([]);
             }
         } catch (error) {
             console.error('Error fetching grocery list:', error);
         }
     };
-    
-    
-    
 
     useEffect(() => {
         fetchGroceryList();
@@ -72,7 +49,7 @@ const GroceryList = () => {
             console.error('Error adding custom item:', error);
         }
     };
-    
+
     const handleDeleteItem = async (itemName) => {
         try {
             await axios.delete(`${BASE_URL}/groceries/item/${itemName}`);
@@ -108,9 +85,6 @@ const GroceryList = () => {
             </div>
         </div>
     );
-
 };
-
-
 
 export default GroceryList;

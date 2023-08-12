@@ -4,31 +4,55 @@ import { combineReducers } from 'redux';
 
 const BASE_URL = 'http://localhost:3000';
 
+export const updateRecipeLikedStatus = (recipeId, liked) => ({
+    type: 'recipes/updateRecipeLikedStatus',
+    payload: { recipeId, liked },
+});
+
+
 
 export const likeRecipeAsync = (recipeId) => async (dispatch) => {
     try {
-        const response = await axios.post(`${BASE_URL}/recipes/${recipeId}/like`);
-        dispatch(likeRecipe(response.data));
+        await axios.post(`${BASE_URL}/recipes/${recipeId}/like`);
+        dispatch(likeRecipe(recipeId)); // Update liked property in Redux store
+        dispatch(addItemToGroceryList(recipeId)); // Add ingredients to grocery list
     } catch (error) {
         console.error('Error liking recipe:', error);
     }
 };
 
 
+export const unlikeRecipeAsync = (recipeId) => async (dispatch) => {
+    try {
+        await axios.post(`${BASE_URL}/recipes/${recipeId}/unlike`);
+        dispatch(likeRecipe(recipeId)); // Update the store with the same action as liking
+
+        // Also update the liked property to false in your Redux store
+        dispatch(updateRecipeLikedStatus(recipeId, false)); // You need to define this action
+    } catch (error) {
+        console.error('Error unliking recipe:', error);
+    }
+};
+
+
+
 const recipesSlice = createSlice({
     name: 'recipes',
     initialState: [],
     reducers: {
-        likeRecipe: (state, action) => {
-            const recipeId = action.payload;
+        // ...
+        updateRecipeLikedStatus: (state, action) => {
+            const { recipeId, liked } = action.payload;
             const recipe = state.find(recipe => recipe._id === recipeId);
             if (recipe) {
-                recipe.liked = true;
+                recipe.liked = liked;
             }
         },
-
+        // ...
     },
+    // ...
 });
+
 
 
 const groceryListSlice = createSlice({

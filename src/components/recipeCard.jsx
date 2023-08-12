@@ -1,21 +1,33 @@
+
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { likeRecipe } from '../actions';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import { likeRecipeAsync, unlikeRecipeAsync} from '../actions';
 import './recipeCard.css';
+
 
 const RecipeCard = ({ recipe }) => {
     const dispatch = useDispatch();
-    const [liked, setLiked] = useState(recipe.liked || false); 
+    const [liked, setLiked] = useState(recipe.liked || false); // Declare 'liked' state here
 
-    const handleLikeClick = () => {
-        dispatch(likeRecipe(recipe._id)); 
-        setLiked(!liked); 
+    const handleLikeClick = async () => {
+        try {
+            if (liked) {
+                dispatch(unlikeRecipeAsync(recipe._id)); // Dispatch the unlikeRecipeAsync action
+            } else {
+                dispatch(likeRecipeAsync(recipe._id)); // Dispatch the likeRecipeAsync action
+            }
+
+            setLiked(!liked); // Toggle the liked state locally
+
+            // fetchGroceryList(); // You might need to uncomment this line if it's required
+        } catch (error) {
+            console.error('Error handling like:', error);
+        }
     };
-
 
     return (
         <Card style={{ width: '18rem' }}>
@@ -29,7 +41,7 @@ const RecipeCard = ({ recipe }) => {
                 </Button>
                 <Link to={`/recipes/${recipe._id}`} className="btn btn-secondary">
                         View Details
-                    </Link>
+                </Link>
             </div>
         </Card.Body>
     </Card>
