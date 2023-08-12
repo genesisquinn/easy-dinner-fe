@@ -15,6 +15,7 @@ const RecipesPage = () => {
     useEffect(() => {
         axios.get(`${BASE_URL}/recipes`, {withCredentials: true})
             .then(response => {
+                console.log(response.data.recipes);
                 setRecipes(response.data.recipes);
             })
             .catch(error => {
