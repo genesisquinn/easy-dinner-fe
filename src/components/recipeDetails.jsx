@@ -3,33 +3,36 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import "./RecipeDetails.css";
 import RecipeEditForm from './editRecipe';
-import { updateRecipeDetails } from '../actions';
+import { updateRecipeDetails, removeRecipe } from '../actions';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const BASE_URL = 'http://localhost:3000';
 
 const RecipeDetails = () => {
     const { _id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
-    const [editMode, setEditMode] = useState(false); 
+    const [editMode, setEditMode] = useState(false);
     const recipe = useSelector(state => state.recipeDetails);
 
-useEffect(() => {
-    axios.get(`${BASE_URL}/recipes/${_id}`, { withCredentials: true })
-        .then(response => {
-            const jsonData = response.data;
-            if (jsonData.success) {
-                dispatch(updateRecipeDetails(jsonData.recipe)); 
-            } else {
-                console.log("Failed to fetch recipe details.");
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}, [dispatch, _id]);
+    useEffect(() => {
+        axios.get(`${BASE_URL}/recipes/${_id}`, { withCredentials: true })
+            .then(response => {
+                const jsonData = response.data;
+                if (jsonData.success) {
+                    dispatch(updateRecipeDetails(jsonData.recipe));
+                } else {
+                    console.log("Failed to fetch recipe details.");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, [dispatch, _id]);
 
     if (recipe === null) {
         return <p>No item found.</p>;
@@ -39,6 +42,15 @@ useEffect(() => {
         setEditMode(!editMode);
     };
 
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`${BASE_URL}/recipes/${_id}`, { withCredentials: true });
+            dispatch(removeRecipe(_id)); // Dispatch the action to remove the recipe from the state
+            navigate('/recipes'); // Navigate to the recipes page
+        } catch (error) {
+            console.error('Error deleting recipe:', error);
+        }
+    };
 
     return (
         <div className="container">
@@ -78,14 +90,15 @@ useEffect(() => {
                             </ul>
                         </div>
                     </div>
-                    
-                    {/* Add an edit button to switch to edit mode */}
+                    <button className="btn btn-danger mt-3" onClick={handleDelete}>
+                        Delete Recipe
+                    </button>
                     <button className="btn btn-primary" onClick={toggleEditMode}>
                         Edit Recipe
                     </button>
                 </>
             ) : (
-        
+
                 <div>
                     <h2>Edit Recipe</h2>
                     <RecipeEditForm recipeId={_id} toggleEditMode={toggleEditMode} />
@@ -93,7 +106,9 @@ useEffect(() => {
                     <button className="btn btn-secondary mt-3" onClick={toggleEditMode}>
                         Cancel Edit
                     </button>
+
                 </div>
+
             )}
         </div>
     );

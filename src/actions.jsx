@@ -22,13 +22,17 @@ const recipesSlice = createSlice({
         setRecipes: (state, action) => {
             return action.payload;
         },
-        
+
         resetLikedStatusForAllRecipes: (state) => {
             return state.map(recipe => ({
                 ...recipe,
                 liked: false,
             }));
         },
+        removeRecipe: (state, action) => {
+            const recipeId = action.payload;
+            return state.filter(recipe => recipe._id !== recipeId);
+        }
     },
 });
 
@@ -57,7 +61,7 @@ const userSlice = createSlice({
         setUser: (state, action) => {
             const { username } = action.payload;
             state.username = username;
-    
+
         },
         clearUser: (state) => {
             state.username = '';
@@ -66,16 +70,16 @@ const userSlice = createSlice({
         setUserLikedRecipes: (state, action) => {
             state.likedRecipes = action.payload;
         },
-        
+
         updateLikedRecipesCount: (state, action) => {
             state.likedRecipesCount = action.payload;
         },
     },
 });
 
-export const { setUser, clearUser, setUserLikedRecipes} = userSlice.actions;
+export const { setUser, clearUser, setUserLikedRecipes } = userSlice.actions;
 export const { updateRecipeDetails } = recipeDetailsSlice.actions;
-export const { likeRecipe, setRecipes } = recipesSlice.actions;
+export const { likeRecipe, setRecipes, removeRecipe } = recipesSlice.actions;
 
 
 
