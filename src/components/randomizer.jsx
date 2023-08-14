@@ -20,7 +20,7 @@ export const handleRandomizeAndLike = async (dispatch) => {
         for (const recipe of selectedRecipes) {
             if (!recipe.liked) {
                 await dispatch(likeRecipeAsync(recipe._id));
-                dispatch(updateRecipeLikedStatus(recipe._id, true)); // Update Redux state
+                dispatch(updateRecipeLikedStatus(recipe._id, true)); 
             }
         }
     } catch (error) {

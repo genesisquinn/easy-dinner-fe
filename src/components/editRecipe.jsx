@@ -16,15 +16,16 @@ const RecipeEditForm = ({ recipeId , toggleEditMode }) => {
     const [infoErrorsObj, setInfoErrorsObj] = useState('');
 
     useEffect(() => {
-        fetch(`${BASE_URL}/recipes/${recipeId}`)
-            .then((response) => response.json())
-            .then((jsonData) => {
+        axios.get(`${BASE_URL}/recipes/${recipeId}`, { withCredentials: true })
+            .then(response => {
+                const jsonData = response.data;
                 setRecipe(jsonData.recipe);
                 setIngredients(jsonData.recipe.ingredients);
             })
-            .catch((error) => console.log(error));
+            .catch(error => {
+                console.log(error);
+            });
     }, [recipeId]);
-
 
     const handleIngredientChange = (index, value) => {
         const updatedIngredients = [...ingredients];
@@ -47,13 +48,17 @@ const RecipeEditForm = ({ recipeId , toggleEditMode }) => {
         };
     
         try {
-            await axios.put(`${BASE_URL}/recipes/${recipeId}`, updatedRecipe, {
+            await axios.put(`${BASE_URL}/recipes/${recipeId}`, updatedRecipe, 
+            {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            });
+            }
+        );
 
             dispatch(updateRecipeDetails(updatedRecipe));
+            console.log(updatedRecipe);
     
             setInfoSubmitObj('Recipe updated successfully!');
             setInfoErrorsObj('');
@@ -141,3 +146,5 @@ RecipeEditForm.propTypes = {
 };
 
 export default RecipeEditForm;
+
+
