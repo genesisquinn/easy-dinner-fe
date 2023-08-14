@@ -30,6 +30,8 @@ function App() {
         <Route path="/submit-recipe" element={<Submit />} />
         <Route path="/recipes/:_id" element={<RecipeDetails />} />
         <Route path="/list" element={<List />} />
+
+
       </Routes>
     </Router>
   );
