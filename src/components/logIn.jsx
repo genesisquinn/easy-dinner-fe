@@ -42,24 +42,6 @@ const Login = () => {
         }
     };
 
-    // const fetchUserLikedRecipes = async () => {
-    //     try {
-    //         // Read the 'userId' cookie
-    //         const userIdCookie = document.cookie.split('; ').find(row => row.startsWith('userId='));
-    //         if (userIdCookie) {
-    //             const userId = userIdCookie.split('=')[1];
-
-    //             // Fetch the user's liked recipes using the userId
-    //             const response = await axios.get(`${BASE_URL}/user/${userId}/liked-recipes`);
-    //             const likedRecipes = response.data;
-
-    //             // Dispatch an action to update the liked recipes state
-    //             dispatch(updateLikedRecipes(likedRecipes));
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching liked recipes:', error);
-    //     }
-    // };
 
     return (
         <div>

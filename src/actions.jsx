@@ -22,6 +22,13 @@ const recipesSlice = createSlice({
         setRecipes: (state, action) => {
             return action.payload;
         },
+        
+        resetLikedStatusForAllRecipes: (state) => {
+            return state.map(recipe => ({
+                ...recipe,
+                liked: false,
+            }));
+        },
     },
 });
 
@@ -70,6 +77,22 @@ export const { setUser, clearUser, setUserLikedRecipes} = userSlice.actions;
 export const { updateRecipeDetails } = recipeDetailsSlice.actions;
 export const { likeRecipe, setRecipes } = recipesSlice.actions;
 
+
+
+
+export const resetLikedRecipesAsync = () => async (dispatch) => {
+    try {
+        await axios.post(`${BASE_URL}/recipes/reset`);
+        dispatch(resetLikedStatusForAllRecipes());
+    } catch (error) {
+        console.error('Error resetting liked recipes:', error);
+    }
+};
+
+
+export const resetLikedStatusForAllRecipes = () => ({
+    type: 'recipes/resetLikedStatusForAllRecipes',
+});
 
 
 
