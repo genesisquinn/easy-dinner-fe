@@ -1,6 +1,4 @@
-
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -10,20 +8,19 @@ import './recipeCard.css';
 
 const RecipeCard = ({ recipe }) => {
     const dispatch = useDispatch();
-    const [liked, setLiked] = useState(recipe.liked);
+    const recipes = useSelector(state => state.recipes); 
 
 
-    const handleLikeClick = () => {
-        if (liked) {
-            dispatch(unlikeRecipeAsync(recipe._id)); 
+    const likedRecipe = recipes.find(item => item._id === recipe._id); 
 
+
+    const handleLikeClick = async () => {
+        if (likedRecipe && likedRecipe.liked) {
+            await dispatch(unlikeRecipeAsync(recipe._id));
         } else {
-            dispatch(likeRecipeAsync(recipe._id));
+            await dispatch(likeRecipeAsync(recipe._id));
         }
-
-        setLiked(!liked); 
     };
-
 
     return (
         <Card style={{ width: '18rem' }}>
@@ -32,9 +29,13 @@ const RecipeCard = ({ recipe }) => {
                 <Card.Title>{recipe.name}</Card.Title>
                 <Card.Text>{recipe.category}</Card.Text>
                 <div className="card-buttons">
-                    <Button variant="primary" onClick={handleLikeClick}>
-                        {liked ? '❤️ Liked' : '♡ Like'}
+                    <Button
+                        variant={likedRecipe && likedRecipe.liked ? 'danger' : 'primary'}
+                        onClick={handleLikeClick}
+                    >
+                        {likedRecipe && likedRecipe.liked ? '❤️ Liked' : '♡ Like'}
                     </Button>
+
                     <Link to={`/recipes/${recipe._id}`} className="btn btn-secondary">
                         View Details
                     </Link>
