@@ -22,13 +22,18 @@ const recipesSlice = createSlice({
         setRecipes: (state, action) => {
             return action.payload;
         },
-        
+
         resetLikedStatusForAllRecipes: (state) => {
+            console.log('Resetting liked status for all recipes');
             return state.map(recipe => ({
                 ...recipe,
                 liked: false,
             }));
         },
+        removeRecipe: (state, action) => {
+            const recipeId = action.payload;
+            return state.filter(recipe => recipe._id !== recipeId);
+        }
     },
 });
 
@@ -49,33 +54,36 @@ const recipeDetailsSlice = createSlice({
 const userSlice = createSlice({
     name: 'user',
     initialState: {
+        _id: '',
         username: '',
-        likedRecipesCount: 0,
+        // likedRecipesCount: 0,
 
     },
     reducers: {
         setUser: (state, action) => {
-            const { username } = action.payload;
+            const { _id, username } = action.payload;
+            state._id = _id;
             state.username = username;
-    
+
         },
         clearUser: (state) => {
             state.username = '';
         },
 
         setUserLikedRecipes: (state, action) => {
+            console.log('Setting user liked recipes:', action.payload);
             state.likedRecipes = action.payload;
         },
-        
+
         updateLikedRecipesCount: (state, action) => {
             state.likedRecipesCount = action.payload;
         },
     },
 });
 
-export const { setUser, clearUser, setUserLikedRecipes} = userSlice.actions;
+export const { setUser, clearUser, setUserLikedRecipes } = userSlice.actions;
 export const { updateRecipeDetails } = recipeDetailsSlice.actions;
-export const { likeRecipe, setRecipes } = recipesSlice.actions;
+export const { likeRecipe, setRecipes, removeRecipe } = recipesSlice.actions;
 
 
 
@@ -83,7 +91,10 @@ export const { likeRecipe, setRecipes } = recipesSlice.actions;
 export const resetLikedRecipesAsync = () => async (dispatch) => {
     try {
         await axios.post(`${BASE_URL}/recipes/reset`);
+        console.log('Reset API call completed.');
         dispatch(resetLikedStatusForAllRecipes());
+        dispatch(setUserLikedRecipes([]));
+        console.log('Dispatched reset actions.');
     } catch (error) {
         console.error('Error resetting liked recipes:', error);
     }
@@ -94,6 +105,14 @@ export const resetLikedStatusForAllRecipes = () => ({
     type: 'recipes/resetLikedStatusForAllRecipes',
 });
 
+export const resetLikedRecipesForUserAsync = (userId) => async () => {
+    try {
+        const response = await axios.post(`${BASE_URL}/groceries/reset`, { userId });
+        console.log(' Liked Recipes Reset call completed:', response.data);
+    } catch (error) {
+        console.error('Error resetting liked recipes for user:', error);
+    }
+};
 
 
 
@@ -164,6 +183,28 @@ export const fetchUserLikedRecipes = () => async (dispatch) => {
         dispatch(setUser(response.data));
     } catch (error) {
         console.error('Error fetching user liked recipes:', error);
+    }
+};
+
+export const fetchGroceryList = async () => {
+    console.log('fetchGroceryList function called');
+    try {
+        const response = await axios.get(`${BASE_URL}/groceries`, {
+            withCredentials: true,
+            headers: {
+                'Cache-Control': 'no-cache' // Add this header to disable caching
+            }
+        });
+
+        if (response.data) {
+            const combinedList = [...response.data.likedRecipeIngredients, ...response.data.customItems];
+            return combinedList;
+        } else {
+            return [];
+        }
+    } catch (error) {
+        console.error('Error fetching grocery list:', error);
+        return [];
     }
 };
 

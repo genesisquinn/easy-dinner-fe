@@ -44,7 +44,7 @@ const RecipeForm = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-                withCredentials: true, 
+                withCredentials: true,
             });
 
             setInfoSubmitObj('Recipe submitted successfully!');
@@ -118,8 +118,8 @@ const RecipeForm = () => {
 
                             <div className='col-12'>
                                 <label htmlFor='category'>Select Category</label>
-                                <select className='form-select form-control' name='category' aria-label='Category'>
-                                    <option selected>Select Category</option>
+                                <select className='form-select form-control' name='category' aria-label='Category' defaultValue=''>
+                                    <option value='' disabled>Select Category</option>
                                     <option value='Asian'>Asian</option>
                                     <option value='American'>American</option>
                                     <option value='Italian'>Italian</option>

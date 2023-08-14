@@ -12,6 +12,7 @@ import List from './pages/List';
 import Home from './pages/Home';
 import Register from './components/registerUser';
 import Login from './components/logIn';
+import Meals from './pages/Meals';
 
 
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/submit-recipe" element={<Submit />} />
         <Route path="/recipes/:_id" element={<RecipeDetails />} />
         <Route path="/list" element={<List />} />
+        <Route path="/meals" element={<Meals />}  /> 
 
 
       </Routes>

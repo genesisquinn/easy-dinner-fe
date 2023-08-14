@@ -30,10 +30,13 @@ const Login = () => {
             const response = await axios.post( `${BASE_URL}/user/login`, formData, {withCredentials: true});
             
             const user = response.data.user; 
+            console.log('user', user);
+
+            dispatch(setUser({ username: user.username, _id: user._id }));
             
             document.cookie = `userId=${user.id}; path=/; secure; HttpOnly; SameSite=Strict`;
             
-            dispatch(setUser(response.data.user.username));
+
 
             
 
