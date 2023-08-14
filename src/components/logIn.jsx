@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../actions';
 
+
 const BASE_URL = 'http://localhost:3000';
 
 const Login = () => {
@@ -27,16 +28,38 @@ const Login = () => {
 
         try {
             const response = await axios.post( `${BASE_URL}/user/login`, formData, {withCredentials: true});
-            console.log(response.data);
+            
+            const user = response.data.user; 
+            
+            document.cookie = `userId=${user.id}; path=/; secure; HttpOnly; SameSite=Strict`;
+            
             dispatch(setUser(response.data.user.username));
 
-            console.log('Dispatched setUser:', response.data.user.username);
-            console.log('API Response:', response.data);
+            
 
         } catch (error) {
             console.error('Error logging in:', error);
         }
     };
+
+    // const fetchUserLikedRecipes = async () => {
+    //     try {
+    //         // Read the 'userId' cookie
+    //         const userIdCookie = document.cookie.split('; ').find(row => row.startsWith('userId='));
+    //         if (userIdCookie) {
+    //             const userId = userIdCookie.split('=')[1];
+
+    //             // Fetch the user's liked recipes using the userId
+    //             const response = await axios.get(`${BASE_URL}/user/${userId}/liked-recipes`);
+    //             const likedRecipes = response.data;
+
+    //             // Dispatch an action to update the liked recipes state
+    //             dispatch(updateLikedRecipes(likedRecipes));
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching liked recipes:', error);
+    //     }
+    // };
 
     return (
         <div>

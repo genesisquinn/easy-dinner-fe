@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import "./RecipeDetails.css";
 import RecipeEditForm from './editRecipe';
 import { updateRecipeDetails } from '../actions';
+import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -17,8 +18,7 @@ const RecipeDetails = () => {
     console.log(recipe)
 
     useEffect(() => {
-        fetch(`${BASE_URL}/recipes/${_id}`)
-        .then((response) => response.json())
+        axios.get(`${BASE_URL}/recipes/${_id}`, {withCredentials: true})
         .then((jsonData) => {
             if (jsonData.success) {
                 dispatch(updateRecipeDetails(jsonData.recipe)); 
