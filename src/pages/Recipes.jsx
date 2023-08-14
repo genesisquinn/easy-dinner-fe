@@ -13,6 +13,8 @@ import './recipes.css';
 const RecipesPage = () => {
     const dispatch = useDispatch();
     const recipes = useSelector(state => state.recipes);
+    const user = useSelector(state => state.user);
+    console.log(user);
 
     useEffect(() => {
         dispatch(fetchRecipes());
@@ -53,7 +55,7 @@ const RecipesPage = () => {
                 >
                     Randomize & Like 7 Recipes
                 </Button>
-                <ResetButton />
+                <ResetButton userId={user._id}/>
             </Form>
             <div className="recipe-cards">
                 {filteredRecipes.map(recipe => (
