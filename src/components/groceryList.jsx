@@ -3,22 +3,23 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 const BASE_URL = 'http://localhost:3000';
 
 const GroceryList = () => {
     const [groceryList, setGroceryList] = useState([]);
     const [customItem, setCustomItem] = useState('');
-    const [user, setUser] = useState('');
+    const [ user, setUser] = useState('');
 
     const fetchGroceryList = async () => {
         try {
             const response = await axios.get(`${BASE_URL}/groceries`, { withCredentials: true });
 
             if (response.data) {
-                setUser(response.data.user._id);
+                setUser(response.data.user._id)
 
-                // Combine liked ingredients and custom items
                 const combinedList = [...response.data.likedRecipeIngredients, ...response.data.customItems];
+
                 setGroceryList(combinedList);
             } else {
                 setGroceryList([]);
@@ -44,7 +45,7 @@ const GroceryList = () => {
                 { withCredentials: true }
             );
             setCustomItem('');
-            fetchGroceryList(); // Update the list after adding the item
+            fetchGroceryList(); 
         } catch (error) {
             console.error('Error adding custom item:', error);
         }
