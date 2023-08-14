@@ -31,7 +31,7 @@
 
 //     // ... the rest of your component code
 // };
-    
+
 //     const [searchQuery, setSearchQuery] = useState('');
 //     const [filteredRecipes, setFilteredRecipes] = useState([]);
 
@@ -47,7 +47,7 @@
 //     }, [searchQuery, recipes]);
 
 
-    
+
 //     return (
 //         <div className="recipes-page">
 //             <Form className="search-bar d-flex">
@@ -75,13 +75,13 @@
 // export default RecipesPage;
 
 
-import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch and useSelector
-import { useEffect, useState } from 'react';
-import RecipeCard from '../components/recipeCard';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import './Recipes.css';
-import { fetchRecipes } from '../actions'; // Import the fetchRecipes action
+// import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch and useSelector
+// import { useEffect, useState } from 'react';
+// import RecipeCard from '../components/recipeCard';
+// import Form from 'react-bootstrap/Form';
+// import Button from 'react-bootstrap/Button';
+// import './Recipes.css';
+// import { fetchRecipes } from '../actions'; // Import the fetchRecipes action
 
 // const RecipesPage = () => {
 //     const dispatch = useDispatch(); // Use the useDispatch hook
@@ -132,6 +132,69 @@ import { fetchRecipes } from '../actions'; // Import the fetchRecipes action
 
 // export default RecipesPage;
 
+// const RecipesPage = () => {
+//     const dispatch = useDispatch();
+//     const recipes = useSelector(state => state.recipes);
+
+//     useEffect(() => {
+//         dispatch(fetchRecipes());
+//     }, [dispatch]);
+
+//     const [searchQuery, setSearchQuery] = useState('');
+//     const [filteredRecipes, setFilteredRecipes] = useState([]);
+
+//     const handleSearchChange = (event) => {
+//         setSearchQuery(event.target.value);
+//     };
+
+//     useEffect(() => {
+//         if (recipes) {
+//             const filtered = recipes.filter(recipe =>
+//                 recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
+//             );
+//             setFilteredRecipes(filtered);
+//         }
+//     }, [searchQuery, recipes]);
+
+
+//     return (
+//         <div className="recipes-page">
+//             <Form className="search-bar d-flex">
+//                 <Form.Control
+//                     type="search"
+//                     placeholder="Search"
+//                     className="me-2"
+//                     aria-label="Search"
+//                     value={searchQuery}
+//                     onChange={handleSearchChange} 
+//                 />
+//                 <Button variant="outline-success">Search</Button>
+//             </Form>
+//             <div className="recipe-cards">
+//                 {filteredRecipes.map(recipe => (
+//                     <RecipeCard 
+//                         key={recipe._id} 
+//                         recipe={recipe}
+//                     />
+//                 ))}
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default RecipesPage;
+
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRecipes } from '../actions';
+import { handleRandomizeAndLike } from '../components/randomizer';
+import RecipeCard from '../components/recipeCard';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import './recipes.css'; 
+
+
+
 const RecipesPage = () => {
     const dispatch = useDispatch();
     const recipes = useSelector(state => state.recipes);
@@ -155,7 +218,6 @@ const RecipesPage = () => {
             setFilteredRecipes(filtered);
         }
     }, [searchQuery, recipes]);
-    
 
     return (
         <div className="recipes-page">
@@ -166,14 +228,21 @@ const RecipesPage = () => {
                     className="me-2"
                     aria-label="Search"
                     value={searchQuery}
-                    onChange={handleSearchChange} 
+                    onChange={handleSearchChange}
                 />
                 <Button variant="outline-success">Search</Button>
+                <Button
+                    variant="success"
+                    className="ms-2" // Add margin for separation
+                    onClick={() => handleRandomizeAndLike(dispatch)}
+                >
+                    Randomize & Like 7 Recipes
+                </Button>
             </Form>
             <div className="recipe-cards">
                 {filteredRecipes.map(recipe => (
-                    <RecipeCard 
-                        key={recipe._id} 
+                    <RecipeCard
+                        key={recipe._id}
                         recipe={recipe}
                     />
                 ))}

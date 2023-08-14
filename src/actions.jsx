@@ -26,29 +26,6 @@ const recipesSlice = createSlice({
 });
 
 
-const groceryListSlice = createSlice({
-    name: 'groceryList',
-    initialState: {
-        likedRecipeIngredients: [],
-        customItems: [],
-    },
-    reducers: {
-        addLikedRecipeIngredients: (state, action) => {
-            state.likedRecipeIngredients.push(...action.payload);
-        },
-        removeLikedRecipeIngredients: (state, action) => {
-            const ingredientsToRemove = action.payload;
-            console.log('Ingredients to remove:', ingredientsToRemove);
-            state.likedRecipeIngredients = state.likedRecipeIngredients.filter(
-                ingredient => !ingredientsToRemove.includes(ingredient)
-            );
-        },
-        setLikedRecipeIngredients: (state, action) => {
-            state.likedRecipeIngredients = action.payload;
-        },
-    },
-});
-
 
 const recipeDetailsSlice = createSlice({
     name: 'recipeDetails',
@@ -65,37 +42,34 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         username: '',
-        likedRecipes: [],
+        likedRecipesCount: 0,
+
     },
     reducers: {
         setUser: (state, action) => {
-            const { username, likedRecipes } = action.payload;
+            const { username } = action.payload;
             state.username = username;
-            state.likedRecipes = likedRecipes;
+    
         },
         clearUser: (state) => {
             state.username = '';
-            state.likedRecipes = [];
         },
 
         setUserLikedRecipes: (state, action) => {
             state.likedRecipes = action.payload;
         },
-        addLikedRecipe: (state, action) => {
-            state.likedRecipes.push(action.payload);
-        },
-        removeLikedRecipe: (state, action) => {
-            state.likedRecipes = state.likedRecipes.filter(recipeId => recipeId !== action.payload);
+        
+        updateLikedRecipesCount: (state, action) => {
+            state.likedRecipesCount = action.payload;
         },
     },
 });
 
-export const { setUser, clearUser, setUserLikedRecipes, addLikedRecipe, removeLikedRecipe } = userSlice.actions;
+export const { setUser, clearUser, setUserLikedRecipes} = userSlice.actions;
 export const { updateRecipeDetails } = recipeDetailsSlice.actions;
 export const { likeRecipe, setRecipes } = recipesSlice.actions;
 
 
-export const { addLikedRecipeIngredients, removeLikedRecipeIngredients } = groceryListSlice.actions;
 
 
 
@@ -103,8 +77,6 @@ export const fetchRecipes = () => async (dispatch) => {
     try {
         const response = await axios.get(`${BASE_URL}/recipes`);
         dispatch(setRecipes(response.data.recipes));
-        console.log(response.data.recipes);
-        console.log 
     } catch (error) {
         console.error('Error fetching recipes:', error);
     }
@@ -133,21 +105,6 @@ export const logoutUser = () => async (dispatch) => {
     }
 };
 
-export const setLikedRecipeIngredients = (ingredients) => (dispatch) => {
-    dispatch(addLikedRecipeIngredients(ingredients));
-};
-
-
-export const removeItemFromGroceryList = (recipeId) => async (dispatch, getState) => {
-    const state = getState();
-    const recipe = state.recipes.find(recipe => recipe._id === recipeId);
-    console.log(state.recipes);
-    console.log(recipeId);
-    console.log(recipe);
-    if (recipe) {
-        dispatch(removeLikedRecipeIngredients(recipe.ingredients));
-    }
-};
 
 
 export const likeRecipeAsync = (recipeId) => async (dispatch) => {
@@ -169,10 +126,13 @@ export const unlikeRecipeAsync = (recipeId) => async (dispatch) => {
 };
 
 
-export const updateRecipeLikedStatus = (recipeId, liked) => ({
-    type: 'recipes/updateRecipeLikedStatus',
-    payload: { recipeId, liked },
-});
+export const updateRecipeLikedStatus = (recipeId, liked) => {
+    console.log('Updating recipe liked status:', recipeId, liked);
+    return {
+        type: 'recipes/updateRecipeLikedStatus',
+        payload: { recipeId, liked },
+    };
+};
 
 export const fetchUserLikedRecipes = () => async (dispatch) => {
     try {
@@ -187,7 +147,6 @@ export const fetchUserLikedRecipes = () => async (dispatch) => {
 
 const rootReducer = combineReducers({
     recipes: recipesSlice.reducer,
-    groceryList: groceryListSlice.reducer,
     recipeDetails: recipeDetailsSlice.reducer,
     user: userSlice.reducer,
 });
