@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import ImagePreview from '../components/imagePreview';
+import Navigation from '../components/navigationBar';
 
 // const BASE_URL = 'https://dinner-made-easy.onrender.com';
 const BASE_URL = 'http://localhost:3000';
@@ -28,12 +29,24 @@ const RecipeForm = () => {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
+        const name = event.target.name.value.trim();
+        const instructions = event.target.instructions.value.trim();
+        const source = event.target.source.value.trim();
+
+        if (name === '' || instructions === '' || source === '' || ingredients.every(ingredient => ingredient.trim() === '')) {
+            setInfoSubmitObj('');
+            setInfoErrorsObj([{ message: 'Please fill in all fields.' }]);
+            return;
+        }
+
         const formData = new FormData();
-        formData.append('name', event.target.name.value);
-        formData.append('source', event.target.source.value);
-        formData.append('instructions', event.target.instructions.value);
+        formData.append('name', name);
+        formData.append('source', source);
+        formData.append('instructions', instructions);
         ingredients.forEach((ingredient) => {
-            formData.append('ingredients', ingredient);
+            if (ingredient.trim() !== '') {
+                formData.append('ingredients', ingredient);
+            }
         });
         formData.append('category', event.target.category.value);
         formData.append('image', imageFile);
@@ -49,6 +62,14 @@ const RecipeForm = () => {
 
             setInfoSubmitObj('Recipe submitted successfully!');
             setInfoErrorsObj('');
+            event.target.name.value = '';
+            event.target.instructions.value = '';
+            event.target.source.value = '';
+            setIngredients(['']);
+            setImageFile(null);
+            event.target.querySelector('input[type="file"]').value = null;
+            event.target.querySelector('select[name="category"]').value = '';
+
         } catch (error) {
             setInfoSubmitObj('');
             setInfoErrorsObj([{ message: 'Oops! Something went wrong.' }]);
@@ -58,6 +79,7 @@ const RecipeForm = () => {
 
     return (
         <>
+            <Navigation />
             <div className='px-4 py-5 my-5 text-center'>
                 <h1 className='display-5 fw-bold'>Submit Your Recipe</h1>
                 <div className='col-lg-6 mx-auto'>

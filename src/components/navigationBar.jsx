@@ -21,7 +21,6 @@ const Navigation = () => {
                             Signed in as: <a href="#login">{username}</a>
                         </Navbar.Text>
                         <Nav className="mx-auto">
-                            <Nav.Link as={Link} to="/">Home</Nav.Link> 
                             <Nav.Link as={Link} to="/recipes">Recipes</Nav.Link>
                             <Nav.Link as={Link} to="/meals">Meals</Nav.Link>
                             <Nav.Link as={Link} to="/list">List</Nav.Link>

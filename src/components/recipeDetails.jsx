@@ -6,6 +6,7 @@ import RecipeEditForm from './editRecipe';
 import { updateRecipeDetails, removeRecipe } from '../actions';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navigation from './navigationBar';
 
 
 const BASE_URL = 'http://localhost:3000';
@@ -52,7 +53,9 @@ const RecipeDetails = () => {
         }
     };
 
-    return (
+return (
+    <div>
+        <Navigation />
         <div className="container">
             {!editMode ? (
                 <>
@@ -98,7 +101,6 @@ const RecipeDetails = () => {
                     </button>
                 </>
             ) : (
-
                 <div>
                     <h2>Edit Recipe</h2>
                     <RecipeEditForm recipeId={_id} toggleEditMode={toggleEditMode} />
@@ -106,13 +108,12 @@ const RecipeDetails = () => {
                     <button className="btn btn-secondary mt-3" onClick={toggleEditMode}>
                         Cancel Edit
                     </button>
-
                 </div>
-
             )}
         </div>
-    );
-};
+    </div>
+);
+}
 
 export default RecipeDetails;
 

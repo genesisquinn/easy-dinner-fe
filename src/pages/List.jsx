@@ -1,10 +1,11 @@
 
 import GroceryList from '../components/groceryList';
+import Navigation from '../components/navigationBar';
 
 const List = () => {
     return (
         <div>
-            <h1>Your Grocery List</h1>
+            <Navigation />
             <GroceryList />
         </div>
     );
