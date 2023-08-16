@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import "./RecipeDetails.css";
+import "./recipeDetails.css";
 import RecipeEditForm from './editRecipe';
 import { updateRecipeDetails, removeRecipe } from '../actions';
 import axios from 'axios';
