@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { fetchGroceryList } from '../actions';
 import './groceryList.css';
+import { BASE_URL } from '../actions';
 
-const BASE_URL = 'http://localhost:3000';
+
 
 const GroceryList = () => {
     const [groceryList, setGroceryList] = useState([]);

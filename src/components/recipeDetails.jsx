@@ -7,9 +7,10 @@ import { updateRecipeDetails, removeRecipe } from '../actions';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navigation from './navigationBar';
+import { BASE_URL } from '../actions';
 
 
-const BASE_URL = 'http://localhost:3000';
+
 
 const RecipeDetails = () => {
     const { _id } = useParams();

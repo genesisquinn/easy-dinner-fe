@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { updateRecipeDetails } from '../actions';
+import { BASE_URL } from '../actions';
 import './editRecipe.css';
 
 
-const BASE_URL = 'http://localhost:3000';
+
+
 
 const RecipeEditForm = ({ recipeId, toggleEditMode }) => {
     const dispatch = useDispatch();

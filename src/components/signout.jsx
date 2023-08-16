@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 import { clearUser } from '../actions';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import { BASE_URL } from '../actions';
 
-const BASE_URL = 'http://localhost:3000';
+
 
 const SignOutButton = () => {
     const dispatch = useDispatch();

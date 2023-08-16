@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { likeRecipeAsync } from '../actions';
 import { updateRecipeLikedStatus } from '../actions';
+import { BASE_URL } from '../actions';
 
-const BASE_URL = 'http://localhost:3000';
+
 
 export const handleRandomizeAndLike = async (dispatch) => {
     try {

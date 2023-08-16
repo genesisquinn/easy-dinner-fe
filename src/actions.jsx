@@ -3,7 +3,7 @@ import axios from 'axios';
 import { combineReducers } from 'redux';
 
 
-const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://dinner-made-easy.onrender.com';
 
 
 

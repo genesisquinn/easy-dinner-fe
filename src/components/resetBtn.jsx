@@ -22,7 +22,7 @@ const ResetButton = ({ userId }) => {
 };
 
 ResetButton.propTypes = {
-    userId: PropTypes.string.isRequired, // Adjust the prop type accordingly
+    userId: PropTypes.string.isRequired,
 };
 
 export default ResetButton;
