@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3000';
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -25,7 +27,7 @@ const Register = () => {
         try {
             const response = await axios.post( `${BASE_URL}/user/register`, formData);
             console.log(response.data);
-            // You can redirect the user to a different page after successful registration
+            navigate('/recipes');
         } catch (error) {
             console.error('Error registering:', error);
         }
