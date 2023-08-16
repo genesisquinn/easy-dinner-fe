@@ -6,7 +6,7 @@ import RecipeCard from '../components/recipeCard';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ResetButton from '../components/resetBtn';
-import './recipes.css';
+import './Recipes.css';
 import Navigation from '../components/navigationBar';
 
 
