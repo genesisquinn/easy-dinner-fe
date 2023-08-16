@@ -8,8 +8,8 @@ import './editRecipe.css';
 
 const BASE_URL = 'http://localhost:3000';
 
-const RecipeEditForm = ({ recipeId , toggleEditMode }) => {
-    const dispatch = useDispatch(); 
+const RecipeEditForm = ({ recipeId, toggleEditMode }) => {
+    const dispatch = useDispatch();
     const [recipe, setRecipe] = useState(null);
     const [ingredients, setIngredients] = useState(['']);
     const [infoSubmitObj, setInfoSubmitObj] = useState('');
@@ -39,27 +39,37 @@ const RecipeEditForm = ({ recipeId , toggleEditMode }) => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-    
+
+        const updatedName = event.target.name.value.trim();
+        const updatedInstructions = event.target.instructions.value.trim();
+        const updatedIngredients = ingredients.filter(ingredient => ingredient.trim() !== ''); // Remove empty ingredients
+
+        if (updatedName === '' || updatedInstructions === '' || updatedIngredients.length === 0) {
+            setInfoSubmitObj('');
+            setInfoErrorsObj([{ message: 'Please fill in all fields.' }]);
+            return;
+        }
+
         const updatedRecipe = {
-            name: event.target.name.value,
-            instructions: event.target.instructions.value,
-            ingredients: ingredients,
+            name: updatedName,
+            instructions: updatedInstructions,
+            ingredients: updatedIngredients,
             category: event.target.category.value,
         };
-    
+
         try {
-            await axios.put(`${BASE_URL}/recipes/${recipeId}`, updatedRecipe, 
-            {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
+            await axios.put(`${BASE_URL}/recipes/${recipeId}`, updatedRecipe,
+                {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
             dispatch(updateRecipeDetails(updatedRecipe));
             console.log(updatedRecipe);
-    
+
             setInfoSubmitObj('Recipe updated successfully!');
             setInfoErrorsObj('');
             toggleEditMode();
@@ -68,7 +78,7 @@ const RecipeEditForm = ({ recipeId , toggleEditMode }) => {
             setInfoErrorsObj([{ message: 'Oops! Something went wrong.' }]);
         }
     }
-    
+
 
     if (!recipe) {
         return <p>Loading...</p>;

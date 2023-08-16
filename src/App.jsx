@@ -6,7 +6,6 @@ import './App.css';
 
 import Recipes from './pages/Recipes';
 import Submit from './pages/newRecipe';
-import Navigation from './components/navigationBar';
 import RecipeDetails from './components/recipeDetails';
 import List from './pages/List';
 import Home from './pages/Home';
@@ -16,13 +15,9 @@ import Meals from './pages/Meals';
 
 
 
-
-
-
 function App() {
   return (
     <Router>
-      <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
@@ -31,9 +26,7 @@ function App() {
         <Route path="/submit-recipe" element={<Submit />} />
         <Route path="/recipes/:_id" element={<RecipeDetails />} />
         <Route path="/list" element={<List />} />
-        <Route path="/meals" element={<Meals />}  /> 
-
-
+        <Route path="/meals" element={<Meals />} />
       </Routes>
     </Router>
   );
@@ -41,3 +34,5 @@ function App() {
 
 
 export default App
+
+

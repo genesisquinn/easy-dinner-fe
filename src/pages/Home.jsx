@@ -1,19 +1,16 @@
-
 import { Link } from 'react-router-dom';
+import './Home.css'; 
 
 const Home = () => {
     return (
-        <div>
-            <h2>Welcome to Easy Dinner App</h2>
-            <p>Choose an option:</p>
-            <div>
+        <div className="home-container">
+            <h2 className="welcome-heading">Dinner Made Easy</h2>
+            <div className="button-container">
                 <Link to="/register">
-                    <button className="btn btn-primary">Register</button>
+                    <button className="register-button">Register</button>
                 </Link>
-            </div>
-            <div>
                 <Link to="/login">
-                    <button className="btn btn-primary">Log In</button>
+                    <button className="login-button">Log In</button>
                 </Link>
             </div>
         </div>
@@ -21,4 +18,5 @@ const Home = () => {
 };
 
 export default Home;
+
 

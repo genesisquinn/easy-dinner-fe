@@ -4,9 +4,31 @@
     gap: 20px;
 }
 
-.recipes-page{
+
+
+.recipes-page {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
+    align-items: center;
 }
+
+.search-bar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-top: 20px; 
+    margin-left: auto
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 16px; 
+}
+
+
+
