@@ -4,11 +4,12 @@
 
 
 # Technologies
--Express/Node.js
--Vite
--Database: MongoDB
+- Express/Node.js
+- Vite
+- Database: MongoDB
 
-# Dependencies
+## Dependencies
+To install dependencies run command ```npm install```
   - "@google-cloud/storage": "^7.0.1",
   -  "bcrypt": "^5.1.0",
   -  "cors": "^2.8.5",
@@ -22,4 +23,36 @@
  - "passport": "^0.6.0",
 - "passport-local": "^1.0.0",
  -  "passport-local-mongoose": "^8.0.0"
+
+# Project Files
+
+## Src
+- models
+- routes
+- .babelrc.js
+- gcp.js
+- server.js
+
+## Models
+
+Schema for database collections. Each collection references User. 
+
+- Database.js
+- GroceryList.js
+- LikedRecipes.js
+- Recipe.js
+- User.js
+
+## Routes
+
+Endpoints for user authentification, recipe & grocery list creation, modification, viewing, storage and organization. 
+
+- listRoutes.js
+- oauth.js
+- recipeRoutes.js
+- request.js
+- userRoutes.js
+- auth.js
+
+
 
