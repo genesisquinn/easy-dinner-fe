@@ -1,8 +1,11 @@
-# React + Vite
+# Dinner Made Easy 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Dinner Made Easy Logo PNG](https://github.com/genesisquinn/easy-dinner-fe/assets/123833736/333e7b69-ad33-4ded-9fa4-00bfca9cb599)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Technologies
+-Express/Node.js
+-Vite
+-Database: MongoDB
+
+# Technologies
