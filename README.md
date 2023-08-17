@@ -6,9 +6,9 @@ A recipe management site designed to help make dinner easier. Use this to help s
 
 To view site run command ```npm run dev```
 
-To view deployed site: http://dinnermadeeasy.netlify.app/
-
 For backend & API: https://github.com/genesisquinn/easy-dinner-be/tree/master
+
+To view deployed site: http://dinnermadeeasy.netlify.app/
 
 
 # Technologies
