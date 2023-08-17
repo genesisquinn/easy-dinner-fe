@@ -2,6 +2,10 @@
 
 ![Dinner Made Easy Logo PNG](https://github.com/genesisquinn/easy-dinner-fe/assets/123833736/333e7b69-ad33-4ded-9fa4-00bfca9cb599)
 
+Backend API for Dinner Made Easy: A recipe management site designed to help make dinner easier. 
+
+To run API run command ```npm run start```
+
 
 # Technologies
 - Express/Node.js
